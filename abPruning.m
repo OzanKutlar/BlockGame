@@ -41,6 +41,7 @@ end
 function isTerminal = isTerminalState(state)
     % Implement logic to check if the game is over
     % Return true if the game is over, otherwise false
+    % add can move
     isTerminal = false;
     % Example logic (this should be adapted to your game)
     % if someCondition
