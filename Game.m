@@ -5,24 +5,24 @@ map = struct('heightMap', [], 'colorMap', []);
 load map
 
 map.heightMap = heightMap;
-map.colorMap = zeros(size(heightMap));
+map.colorMap = zeros(size(heightMap)); % before feeding to AI use +1 for layer
 
 
 
-players = zeros(2, 2);
+players = zeros(2, 2); % since 2 people it is 2 by 2, for 3 it is 3 by 2
 colors = ["black", "red", "blue"];
 
-players(1, :) = [2, 2];
-players(2, :) = [16, 16];
+players(1, :) = [4, 7];
+players(2, :) = [7, 4]; % int locations set
 
-% canMove(map, players, 1);
+% canMove(map, players, 1); % code check for canMove
 drawMap(map, players, colors);
 
 
-function drawMap(map, players, colors)
-    drawBox(map.heightMap(1, 1), [1, 1], colors(map.colorMap(1, 1) + 1));
+function drawMap(map, players, colors) % not used for AI
+    drawBox(map.heightMap(1, 1), [1, 1], colors(map.colorMap(1, 1) + 1)); % to int the draw func for matlab
     hold on
-    for i = 1:height(map.heightMap)
+    for i = 1:height(map.heightMap) %to iterate for new moves
         for j = 1:width(map.heightMap)
             if(map.heightMap(i, j) == 0)
                 continue;
