@@ -13,12 +13,12 @@ function drawBox(height, location, color)
     z = [0, 0, 0, 0, height, height, height, height]; % Z-coordinates of the 8 corners
 
     % Create a figure and scatter the points
-    scatter3(x, y, z, 'filled');
+    % scatter3(x, y, z, 'filled');
 
     % Draw lines connecting the corners to form the edges of the box
     % Define the edges of the box using indices into the corners
     edges = [
-        1 2; 2 3; 3 4; 4 1; % Bottom face
+        % Bottom face
         5 6; 6 7; 7 8; 8 5; % Top face
         1 5; 2 6; 3 7; 4 8  % Vertical edges
     ];
