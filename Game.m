@@ -34,23 +34,6 @@ function drawMap(map, players, colors) % not used for AI
 end
 
 
-function canMove = canMove(map, players, playerID)
-    canMove = false;
-    for i = [-1, 0, 1]
-        for j = [-1, 0, 1]
-            if(i == 0 && j == 0)
-                continue
-            end
-            tempPlayer = players(playerID, :);
-            players = movePlayer(map, playerID, players, players(playerID, :) + [i, j]);
-            if(all(players(playerID, :) - [i ,j] == tempPlayer))
-                canMove = true;
-                return;
-            end
-        end
-    end
-end
-
 function players = movePlayer(map, playerID, players, location)
     player = players(playerID, :);
     movementVector = abs(player - location);
@@ -79,7 +62,7 @@ function players = movePlayer(map, playerID, players, location)
         end
     end
     clear heightDifference
-    players(playerID, :) = location;
+    players(playerID, :) = location; % the location checked is the new location for the player
 end
 
 function map = placeBlock(playerID, map, location, players)
