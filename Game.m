@@ -42,7 +42,7 @@ while false
     currentPlayer = currentPlayer + 1;
 end
 drawMap(map, players, colors);
-moveCount = moveCount(map, players, 2)
+
 
 
 

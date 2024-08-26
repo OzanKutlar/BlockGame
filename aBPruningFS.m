@@ -1,9 +1,9 @@
-% isTerminal is set
-% EXAMPLE INPUT: bestMove = alphaBetaPruning(currentState, 3, -Inf, Inf, true);
-function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
+
+% EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true, map, players);
+function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer, map, players) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
-        bestValue = evaluateState(state);
+        bestValue = evaluateState(state, map, players);
         return;
     end
     
@@ -72,19 +72,22 @@ function bestMove = alphaBetaPruningFH(state, depth, alpha, beta, maximizingPlay
     end
 end
 
-function isTerminal = isTerminalState(state)
+function isTerminal = isTerminalState(map, players)
     % Logic to check if the game is over
     % Return true if the game is over, otherwise false
-    canMove = canMove(map, players, playerID);
-    isTerminal = ~canMove;
+    canMove1 = canMove(map, players, 1);
+    canMove2 = canMove(map, players, 2);
+    isTerminal = ~(canMove1 | canMove2);
 end
 
-function score = evaluateState(state)
+function score = evaluateState(state, map, players)
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
-    score = 0;
-    % Example logic (this should be adapted to your game)
-    % score = someEvaluationFunction(state);
+    % score = 0;
+    moveCount1 = moveCount(map, players, 1);
+    moveCount2 = moveCount(map, players, 2);
+    score = moveCount1 - moveCount2;
+
 end
 
 function children = generateChildren(state, maximizingPlayer)
