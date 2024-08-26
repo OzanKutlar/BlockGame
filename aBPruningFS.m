@@ -1,15 +1,15 @@
 
 % EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true, map, players);
-function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer, map, players) % Fail Soft alpha beta pruning algorithm
+function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
-    if depth == 0 || isTerminalState(state)
-        bestValue = evaluateState(state, map, players);
+    if depth == 0 || isTerminalState(map, players)
+        bestValue = evaluateState(map, players);
         return;
     end
     
     if maximizingPlayer
         bestValue = -Inf;
-        children = generateChildren(state, maximizingPlayer);
+        children = generateChildren(maximizingPlayer);
         for i = 1:length(children)
             eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
             bestValue = max(bestValue, eval);
@@ -32,7 +32,7 @@ function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer, ma
     end
 end
 
-function bestMove = alphaBetaPruningFH(state, depth, alpha, beta, maximizingPlayer)
+function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer)
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
         bestMove = evaluateState(state);
@@ -80,7 +80,7 @@ function isTerminal = isTerminalState(map, players)
     isTerminal = ~(canMove1 | canMove2);
 end
 
-function score = evaluateState(state, map, players)
+function score = evaluateState(map, players)
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
@@ -90,17 +90,37 @@ function score = evaluateState(state, map, players)
 
 end
 
-function children = generateChildren(state, maximizingPlayer)
+function children = generateChildren(playTurn)
     % Generate all possible children (next possible states) from the current state
     % This function should return a cell array of states
-    children = {};
-    % Example logic (this should be adapted to your game)
-    % moves = getAllPossibleMoves(state, maximizingPlayer);
-    % for each move
-    %     newState = applyMove(state, move);
-    %     children{end + 1} = newState;
-    % end
+    
+    children = {};  % Initialize the cell array to hold child states
+    
+    % Determine which player's turn it is
+    % made it so that there are actually four moves each round for the
+    % algorithm to able to change the order if need be in the future
+    if playTurn == "redMove"
+        player = 'white';  % Assuming 'white' is the AI maximizing player
+    elseif playTurn == "redPlaceBlock"
+    
+    elseif playTurn == "bluePlaceBlock"
+    else
+        player = 'black';  % Assuming 'black' is the opponent
+    end
+    
+    % Get all possible legal moves for the current player
+    moves = getAllPossibleMoves(state, player);
+    
+    % Loop through each possible move
+    for i = 1:length(moves)
+        % Apply the move to the current state to generate a new state
+        newState = applyMove(state, moves{i});
+        
+        % Add the new state to the list of children
+        children{end + 1} = newState;
+    end
 end
+
 
 % Example usage:
 currentState = initializeGame();  % Function to initialize the game state
