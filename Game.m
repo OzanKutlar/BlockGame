@@ -17,7 +17,7 @@ players(2, :) = [7, 4]; % int locations set
 
 % canMove(map, players, 1); % code check for canMove
 drawMap(map, players, colors);
-
+moveCount = moveCount(map, players, 1)
 
 function drawMap(map, players, colors) % not used for AI
     drawBox(map.heightMap(1, 1), [1, 1], colors(map.colorMap(1, 1) + 1)); % to int the draw func for matlab
@@ -81,7 +81,7 @@ function map = placeBlock(playerID, map, location, players)
 end
 
 function playGame()
-    canMove = canMove(map, players, playerID)
+    canMove = canMove(map, players, playerID);
     while canMove(map, players, playerID)
         % AI's turn
         bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
