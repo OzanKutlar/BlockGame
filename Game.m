@@ -13,13 +13,13 @@ map.colorMap = zeros(size(heightMap)); % before feeding to AI use +1 for layer
 players = zeros(2, 2); % since 2 people it is 2 by 2, for 3 it is 3 by 2
 colors = ["black", "red", "blue"];
 
-players(1, :) = [4, 7];
-players(2, :) = [7, 4]; % int locations set
+players(1, :) = [2, 2];
+players(2, :) = [5, 6]; % int locations set
 
 % canMove(map, players, 1); % code check for canMove
 winner = 0;
 currentPlayer = 1;
-while true
+while false
     disp("Please move your character : ")
     while true
         targetLoc = getInput();
@@ -42,7 +42,7 @@ while true
     currentPlayer = currentPlayer + 1;
 end
 drawMap(map, players, colors);
-moveCount = moveCount(map, players, 1)
+moveCount = moveCount(map, players, 2)
 
 
 

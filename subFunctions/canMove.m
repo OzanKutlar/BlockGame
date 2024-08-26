@@ -7,9 +7,8 @@ function canMove = canMove(map, players, playerID) % map = heightmap, players = 
             if(i == 0 && j == 0)
                 continue
             end
-            tempPlayer = players(playerID, :); % 2 by 1 location of player
-            players = movePlayer(map, playerID, players, players(playerID, :) + [i, j]);
-            if(any(players(playerID, :) ~= tempPlayer)) % any(players current pos ~= players old position)
+            [~,acception] = movePlayer(map, playerID, players, players(playerID, :) + [i, j]);
+            if acception == true
                 canMove = true;
                 return;
             end

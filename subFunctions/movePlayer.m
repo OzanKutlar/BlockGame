@@ -1,21 +1,21 @@
-function [players, moveAccepted] = movePlayer(map, playerID, players, location, displayMsg)
+function [players, moveAccepted] = movePlayer(map, playerID, players, location, verbose)
     player = players(playerID, :);
     moveAccepted = false;
     movementVector = abs(player - location);
     if(any(movementVector > 1))
-        if(displayMsg)
+        if(verbose)
             disp("Target out of range.");
         end
         return;
     end
     if(all(movementVector == 0))
-        if(displayMsg)
+        if(verbose)
             disp("You have to move.");
         end
         return;
     end
     if(any(all(players(:, :) == location)))
-        if(displayMsg)
+        if(verbose)
             disp("There is a player at the target");
         end
         return;
@@ -23,14 +23,14 @@ function [players, moveAccepted] = movePlayer(map, playerID, players, location, 
     clear movementVector
     heightDifference = map.heightMap(location(1), location(2)) - map.heightMap(player(1), player(2));
     if(abs(heightDifference) > 1)
-        if(displayMsg)
+        if(verbose)
             disp("Too high");
         end
         return;
     end
     if(heightDifference == 1)
         if(map.colorMap(location(1), location(2)) ~= playerID && map.colorMap(location(1), location(2)) ~= 0)
-            if(displayMsg)
+            if(verbose)
                 disp("Wrong Color");
             end
             return;
