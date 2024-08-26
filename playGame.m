@@ -3,7 +3,7 @@ function playGame()
     
     while ~isTerminalState(currentState)
         % AI's turn
-        bestMove = alphaBetaPruning(currentState, 3, -Inf, Inf, true);
+        bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
         currentState = applyMove(currentState, bestMove);  % Apply the AI's move
         
         if isTerminalState(currentState)

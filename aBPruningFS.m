@@ -1,4 +1,5 @@
 % isTerminal is set
+% EXAMPLE INPUT: bestMove = alphaBetaPruning(currentState, 3, -Inf, Inf, true);
 function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
