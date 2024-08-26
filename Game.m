@@ -36,7 +36,10 @@ while true
             break
         end
     end
-    
+    if(currentPlayer == height(players) + 1)
+        currentPlayer = 0;
+    end
+    currentPlayer = currentPlayer + 1;
 end
 drawMap(map, players, colors);
 moveCount = moveCount(map, players, 1)
