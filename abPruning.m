@@ -1,10 +1,43 @@
-function bestMove = alphaBetaPruning(state, depth, alpha, beta, maximizingPlayer)
+% isTerminal is set
+function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
+    % Check if the game is over or if we've reached the maximum depth
+    if depth == 0 || isTerminalState(state)
+        bestValue = evaluateState(state);
+        return;
+    end
+    
+    if maximizingPlayer
+        bestValue = -Inf;
+        children = generateChildren(state, maximizingPlayer);
+        for i = 1:length(children)
+            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
+            bestValue = max(bestValue, eval);
+            alpha = max(alpha, eval);
+            if beta <= alpha
+                break; % Beta cut-off
+            end
+        end
+    else
+        bestValue = Inf;
+        children = generateChildren(state, maximizingPlayer);
+        for i = 1:length(children)
+            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, true);
+            bestValue = min(bestValue, eval);
+            beta = min(beta, eval);
+            if beta <= alpha
+                break; % Alpha cut-off
+            end
+        end
+    end
+end
+
+function bestMove = alphaBetaPruningFH(state, depth, alpha, beta, maximizingPlayer)
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
         bestMove = evaluateState(state);
         return;
     end
-    
+
     if maximizingPlayer
         maxEval = -Inf;
         children = generateChildren(state, maximizingPlayer);
@@ -39,14 +72,10 @@ function bestMove = alphaBetaPruning(state, depth, alpha, beta, maximizingPlayer
 end
 
 function isTerminal = isTerminalState(state)
-    % Implement logic to check if the game is over
+    % Logic to check if the game is over
     % Return true if the game is over, otherwise false
-    % add can move
-    isTerminal = false;
-    % Example logic (this should be adapted to your game)
-    % if someCondition
-    %     isTerminal = true;
-    % end
+    canMove = canMove(map, players, playerID);
+    isTerminal = ~canMove;
 end
 
 function score = evaluateState(state)
