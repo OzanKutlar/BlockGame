@@ -17,8 +17,18 @@ players(2, :) = [7, 4]; % int locations set
 
 % canMove(map, players, 1); % code check for canMove
 winner = 0;
+currentPlayer = 1;
 while true
-    targetLoc = getInput();
+    disp("Please move your character : ")
+    while true
+        targetLoc = getInput();
+        [players, accepted] = movePlayer(map, currentPlayer, players, targetLoc);
+        if(accepted)
+            break
+        end
+    end
+    disp("Please place your block : ");
+
     
 end
 drawMap(map, players, colors);
@@ -39,38 +49,50 @@ function drawMap(map, players, colors) % not used for AI
 end
 
 
-function players = movePlayer(map, playerID, players, location)
+function [players, moveAccepted] = movePlayer(map, playerID, players, location, displayMsg)
     player = players(playerID, :);
+    moveAccepted = false;
     movementVector = abs(player - location);
     if(any(movementVector > 1))
-        disp("Target out of range.");
+        if(displayMsg)
+            disp("Target out of range.");
+        end
         return;
     end
     if(all(movementVector == 0))
-        disp("You have to move.");
+        if(displayMsg)
+            disp("You have to move.");
+        end
         return;
     end
     if(any(all(players(:, :) == location)))
-        disp("There is a player at the target");
+        if(displayMsg)
+            disp("There is a player at the target");
+        end
         return;
     end
     clear movementVector
     heightDifference = map.heightMap(location(1), location(2)) - map.heightMap(player(1), player(2));
     if(abs(heightDifference) > 1)
-        disp("Too high");
+        if(displayMsg)
+            disp("Too high");
+        end
         return;
     end
     if(heightDifference == 1)
         if(map.colorMap(location(1), location(2)) ~= playerID && map.colorMap(location(1), location(2)) ~= 0)
-            disp("Wrong Color");
+            if(displayMsg)
+                disp("Wrong Color");
+            end
             return;
         end
     end
     clear heightDifference
+    moveAccepted = true;
     players(playerID, :) = location; % the location checked is the new location for the player
 end
 
-function map = placeBlock(playerID, map, location, players)
+function [map, moveAccepted] = placeBlock(playerID, map, location, players)
     if(map.heightMap(location(1), location(2)) == 0)
         % Player tried to place a block in the void.
         disp("Invalid Location");
