@@ -16,8 +16,14 @@ players(1, :) = [4, 7];
 players(2, :) = [7, 4]; % int locations set
 
 % canMove(map, players, 1); % code check for canMove
+winner = 0;
+while true
+    targetLoc = getInput();
+    
+end
 drawMap(map, players, colors);
 moveCount = moveCount(map, players, 1)
+
 
 function drawMap(map, players, colors) % not used for AI
     drawBox(map.heightMap(1, 1), [1, 1], colors(map.colorMap(1, 1) + 1)); % to int the draw func for matlab

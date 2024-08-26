@@ -10,6 +10,7 @@ function moveCount = moveCount(map, players, playerID) % map = heightmap, player
             if(any(players(playerID, :) ~= tempPlayer)) % any(players current pos ~= players old position)
                 moveCount = moveCount + 1;
             end
+            players(playerID, :) = tempPlayer;
         end
     end
 end
