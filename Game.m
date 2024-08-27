@@ -35,7 +35,7 @@ state.currentPlayer = 1;
 % return
 
 
-drawMap(map, players, colors);
+drawMap(map, players, colors, currentPlayer);
 
 while true
     
@@ -46,9 +46,22 @@ while true
     state.map = map;
     state.players = players;
     
-    drawMap(map, players, colors);
-    title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
-    % canMove(state, currentPlayer);
+    drawMap(map, players, colors, currentPlayer);
+    if(~canMove(state, currentPlayer))
+        disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has died!"));
+        players(currentPlayer, :) = [];
+        colors(currentPlayer + 1) = [];
+        if(currentPlayer == height(players) + 1)
+            currentPlayer = 1;
+        end
+    end
+    
+    if(height(players) == 1)
+        disp("Game Over!");
+        disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has won!"));
+        return;
+    end
+    
 
     while true
         targetLoc = getMove(state, false);
@@ -58,8 +71,7 @@ while true
         end
     end
 
-    drawMap(map, players, colors);
-    title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
+    drawMap(map, players, colors, currentPlayer);
 
     while true
         targetLoc = getBlockPlacement(state, false);
