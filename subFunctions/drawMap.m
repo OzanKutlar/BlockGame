@@ -1,4 +1,4 @@
-function drawMap(map, players, colors) % not used for AI
+function drawMap(map, players, colors, currentPlayer) % not used for AI
     originalView = get(gca, 'View');
     drawBox(map.heightMap(1, 1), [1, 1], colors(map.colorMap(1, 1) + 1)); % to int the draw func for matlab
     hold on
@@ -24,5 +24,6 @@ function drawMap(map, players, colors) % not used for AI
     azimuth = -45; % Customize these values as needed
     elevation = 45; 
     view(azimuth, elevation); % Apply the view angles
+    title(strcat("It is player ", upper(colors(currentPlayer + 1)), "'s turn."))
     hold off
 end

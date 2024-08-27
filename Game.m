@@ -35,85 +35,16 @@ state.currentPlayer = 1;
 % return
 
 
-drawMap(map, players, colors);
+drawMap(map, players, colors, currentPlayer);
 
-while true
-    
-    %%% Ozan bunu fonksiyon yapabilir misin getPlayeMove(currentState) gibi
-    % böylece if AI == 1 || 2 başka loopa girmesini sağlarız
-    %yukarıda number of AI players'ı göstermek istedim.
-
-    state.map = map;
-    state.players = players;
-    
-    drawMap(map, players, colors);
-    title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
-    % canMove(state, currentPlayer);
-    
-    if currentPlayer == 1 % check if it is AI move
-        [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
-        playerTargetLoc = bestMove{1,:};
-        blockTargetLoc = bestMove{2,:};
-
-        [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc, true);
-        [map, ~] = placeBlock(currentPlayer, map, blockTargetLoc, players, true);
-        state.map = map;
-        state.players = players;
-        
-    else % Human move
-        while true
-            targetLoc = getMove(state, false);
-            [players, accepted] = movePlayer(map, currentPlayer, players, targetLoc, true);
-            if(accepted)
-                break
-            end
-        end
-    
-        drawMap(map, players, colors);
-        title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
-    
-        while true
-            targetLoc = getBlockPlacement(state, false);
-            [map, accepted] = placeBlock(currentPlayer, map, targetLoc, players, true);
-            if(accepted)
-                break
-            end
-        end
-    end
-    if(currentPlayer == height(players))
-        currentPlayer = 0;
-    end
-    currentPlayer = currentPlayer + 1;
+x = input("Play against AI? Y/N [Y]", 's');
+if(isempty(x))
+    x = "Y";
+end
+if(x == "Y")
+    aiGame;
+end
+if(x == "N")
+    humanGame;
 end
 
-
-
-
-
-
-
-
-
-
-
-
-function playGame()
-    canMove = canMove(map, players, playerID);
-    while canMove(map, players, playerID)
-        % AI's turn
-        bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
-        currentState = applyMove(currentState, bestMove);  % Apply the AI's move
-        
-        if isTerminalState(currentState)
-            break;
-        end
-        
-        % Opponent's turn (this could be a human player or another AI)
-        % For simplicity, assume opponentMove is a function that gets the opponent's move
-        opponentMove = getOpponentMove(currentState);
-        currentState = applyMove(currentState, opponentMove);
-    end
-    
-    disp('Game Over');
-    % Display the final result or winner
-end
