@@ -1,5 +1,5 @@
 
-% EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
+% EXAMPLE INPUT: [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
 function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)

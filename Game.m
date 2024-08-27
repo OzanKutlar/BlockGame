@@ -49,23 +49,35 @@ while true
     drawMap(map, players, colors);
     title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
     % canMove(state, currentPlayer);
+    
+    if currentPlayer == 1 % check if it is AI move
+        [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
+        playerTargetLoc = bestMove{1,:};
+        blockTargetLoc = bestMove{2,:};
 
-    while true
-        targetLoc = getMove(state, false);
-        [players, accepted] = movePlayer(map, currentPlayer, players, targetLoc, true);
-        if(accepted)
-            break
+        [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc, true);
+        [map, ~] = placeBlock(currentPlayer, map, blockTargetLoc, players, true);
+        state.map = map;
+        state.players = players;
+        
+    else % Human move
+        while true
+            targetLoc = getMove(state, false);
+            [players, accepted] = movePlayer(map, currentPlayer, players, targetLoc, true);
+            if(accepted)
+                break
+            end
         end
-    end
-
-    drawMap(map, players, colors);
-    title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
-
-    while true
-        targetLoc = getBlockPlacement(state, false);
-        [map, accepted] = placeBlock(currentPlayer, map, targetLoc, players, true);
-        if(accepted)
-            break
+    
+        drawMap(map, players, colors);
+        title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
+    
+        while true
+            targetLoc = getBlockPlacement(state, false);
+            [map, accepted] = placeBlock(currentPlayer, map, targetLoc, players, true);
+            if(accepted)
+                break
+            end
         end
     end
     if(currentPlayer == height(players))
