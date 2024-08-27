@@ -15,7 +15,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
         bestValue = -Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
-            [move, eval] = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
+            [move, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, false);
             bestValue = max(bestValue, eval);
             if eval >= bestValue
                 bestValue = eval;
@@ -30,7 +30,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
         bestValue = Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
-            [move, eval] = alphaBetaPruning(children{i}, depth - 1, alpha, beta, true);
+            [move, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, true);
             if eval < bestValue
                 bestValue = eval;
                 bestMove = move;
@@ -55,10 +55,10 @@ function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer) %#o
         children = generateChildren(state, maximizingPlayer);
         bestMove = [];
         for i = 1:length(children)
-            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
+            eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, false);
             if eval > maxEval
                 maxEval = eval;
-                bestMove = children{i};
+                bestMove = children(i);
             end
             alpha = max(alpha, eval);
             if beta <= alpha
@@ -70,10 +70,10 @@ function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer) %#o
         children = generateChildren(state, maximizingPlayer);
         bestMove = [];
         for i = 1:length(children)
-            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, true);
+            eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, true);
             if eval < minEval
                 minEval = eval;
-                bestMove = children{i};
+                bestMove = children(i);
             end
             beta = min(beta, eval);
             if beta <= alpha
@@ -90,8 +90,8 @@ function score = evaluateState(state)
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
-    moveCount1 = moveCount(map, players, 1);
-    moveCount2 = moveCount(map, players, 2);
+    moveCount1 = moveCount(state, 1);
+    moveCount2 = moveCount(state, 2);
     score = moveCount1 - moveCount2;
     if moveCount1 == 0
         score = -10;
@@ -104,9 +104,7 @@ end
 function children = generateChildren(state, playTurn)
     % Generate all possible children (next possible states) from the current state
     % This function should return a cell array of states
-    
-    children = {};  % Initialize the cell array to hold child states
-    
+
     % Determine which player's turn it is
     % made it so that there are actually four moves each round for the
     % algorithm to able to change the order if need be in the future
@@ -118,14 +116,17 @@ function children = generateChildren(state, playTurn)
     
     % Get all possible legal moves for the current player
     moves = getAllPossibleMoves(state, player);
+
+    children(length(moves) + 1) = state;
+    children(length(moves) + 1) = [];
     
     % Loop through each possible move
     for i = 1:length(moves)
         % Apply the move to the current state to generate a new state
-        newState = applyMove(state, moves{i});
+        newState = applyMove(state, moves(i, :));
         
         % Add the new state to the list of children
-        children{end + 1} = newState; %#ok<AGROW> 
+        children(i) = newState;
     end
 end
 

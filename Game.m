@@ -37,7 +37,7 @@ state.currentPlayer = 1;
 
 drawMap(map, players, colors, currentPlayer);
 
-x = input("Play against AI? Y/N [Y]", 's');
+x = input("Play against AI? Y/N [Y] : ", 's');
 if(isempty(x))
     x = "Y";
 end

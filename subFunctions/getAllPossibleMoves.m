@@ -38,7 +38,7 @@ function moves = getAllPossibleMoves(state, maximizingPlayer)
                                 if blockLocation(1) >= 1 && blockLocation(1) <= mapRows && blockLocation(2) >= 1 && blockLocation(2) <= mapCols
                                     [~, moveAccepted] = placeBlock(playerID, map, blockLocation, newPlayers, false);
                                     if moveAccepted == true
-                                        moves{end + 1} = [playerMove, blockLocation]; %#ok<AGROW> 
+                                        moves(end + 1, :) = [playerMove, blockLocation]; %#ok<AGROW> 
                                     end
                                 end
                             end

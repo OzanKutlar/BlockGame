@@ -6,9 +6,9 @@ function newstate = applyMove(state, move)
     newstate = state;
 
     currentPlayer = state.currentPlayer;
-    playerTargetLoc = move{1, :};
+    playerTargetLoc = move(1:2);
     playerID = currentPlayer;
-    placeBlockLocation = move{2, :};
+    placeBlockLocation = move(3:4);
 
     [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc);
     [map, ~] = placeBlock(playerID, map, placeBlockLocation, players);
