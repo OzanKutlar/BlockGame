@@ -27,10 +27,16 @@ function moves = getAllPossibleMoves(state, maximizingPlayer)
                         playerMove = newPos;
                         
                         %get possible bock placements for the newPlayers
-                        for 
-                            [map, moveAccepted] = placeBlock(playerID, map, location, players, verbose)
-                            if moveAccepted == true
-                                return
+                        for k = [-1, 0, 1]
+                            for l = [-1, 0, 1]
+                                if(k == 0 && l == 0)
+                                    continue
+                                end
+                                blockLocation = newPos + [k, l];
+                                [~, moveAccepted] = placeBlock(playerID, map, blockLocation, newPlayers, false);
+                                if moveAccepted == true
+                                    moves{end + 1} = [playerMove, blockLocation]; %#ok<AGROW> 
+                                end
                             end
                         end
 

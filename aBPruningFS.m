@@ -82,6 +82,11 @@ function score = evaluateState(state)
     moveCount1 = moveCount(map, players, 1);
     moveCount2 = moveCount(map, players, 2);
     score = moveCount1 - moveCount2;
+    if moveCount1 == 0
+        score = -10;
+    elseif moveCount2 == 0
+        score = 20;
+    end
 
 end
 
