@@ -107,7 +107,7 @@ function score = evaluateState(state)
         if(otherMoveCount == 0)
             killed = killed + 1;
         end
-        moveCountOthers = moveCountOthers + moveCountOthers;
+        moveCountOthers = moveCountOthers + otherMoveCount;
     end
     score = moveCountOwn - moveCountOthers;
     if(killed ~= 0)
