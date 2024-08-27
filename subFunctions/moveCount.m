@@ -13,7 +13,7 @@ function moveCount = moveCount(map, players, playerID) % map = heightmap, player
             if newPos(1) >= 1 && newPos(1) <= mapRows && newPos(2) >= 1 && newPos(2) <= mapCols
                 % Check if the height at the new position is not zero           
                 if map.heightMap(newPos(1), newPos(2)) ~= 0
-                    [~, acception] = movePlayer(map, playerID, players, newPos, true); % false at the end is for verbose
+                    [~, acception] = movePlayer(map, playerID, players, newPos, false); % false at the end is for verbose
                     if acception == true 
                         moveCount = moveCount + 1;
                     end

@@ -72,11 +72,11 @@ function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer)
     end
 end
 
-function isTerminal = isTerminalState(map, players)
+function isTerminal = isTerminalState(state)
     % Logic to check if the game is over
     % Return true if the game is over, otherwise false
-    canMove1 = canMove(map, players, 1);
-    canMove2 = canMove(map, players, 2);
+    canMove1 = canMove(state, 1);
+    canMove2 = canMove(state, 2);
     isTerminal = ~(canMove1 | canMove2);
 end
 
