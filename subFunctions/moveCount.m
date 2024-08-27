@@ -7,7 +7,6 @@ function moveCount = moveCount(map, players, playerID) % map = heightmap, player
             if(i == 0 && j == 0)
                 continue
             end
-
             newPos = currentPos + [i, j];
             % Check if newPos is within bounds
             if newPos(1) >= 1 && newPos(1) <= mapRows && newPos(2) >= 1 && newPos(2) <= mapCols
