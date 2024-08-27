@@ -14,7 +14,7 @@ function [players, moveAccepted] = movePlayer(map, playerID, players, location, 
         end
         return;
     end
-    if(any(all(players(:, :) == location)))
+    if(any(all((players(:, :) == location)')))
         if(verbose)
             disp("There is a player at the target");
         end

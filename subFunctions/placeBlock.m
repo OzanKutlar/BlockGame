@@ -7,7 +7,7 @@ function [map, moveAccepted] = placeBlock(playerID, map, location, players, verb
         end
         return;
     end
-    if(any(all(players(:, :) == location)))
+    if(any(all((players(:, :) == location)')))
         if(verbose)
             disp("Location is occupied.");
         end
