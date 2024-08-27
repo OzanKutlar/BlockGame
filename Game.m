@@ -32,6 +32,9 @@ currentPlayer = 1;
 state.turn = "redMove";
 % The turns are the following:
 Turns = ["redMove", "redPlaceBlock", "blueMove", "bluePlaceBlock"];
+drawMap(map, players, colors);
+return
+
 
 drawMap(map, players, colors);
 

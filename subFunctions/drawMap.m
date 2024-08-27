@@ -9,5 +9,12 @@ function drawMap(map, players, colors) % not used for AI
             drawBox(map.heightMap(i, j), [i, j], colors(map.colorMap(i, j) + 1));
         end
     end
+    for i = 1:height(players)
+        scatter3(players(i, 1) + 0.5, players(i, 2) + 0.5, map.heightMap(players(i, 1), players(i, 2)) + 0.1, 150, colors(i + 1), 'filled');
+    end
+    yticks(1.5:width(map.heightMap) + 0.5);
+    yticklabels(char('A' + (1:width(map.heightMap)) - 1)');
+    xticks(1.5:height(map.heightMap) + 0.5);
+    xticklabels((1:height(map.heightMap)));
     hold off
 end
