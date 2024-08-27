@@ -19,6 +19,10 @@ function drawMap(map, players, colors) % not used for AI
     yticklabels(char('A' + (1:width(map.heightMap)) - 1)');
     xticks(1.5:height(map.heightMap) + 0.5);
     xticklabels((1:height(map.heightMap)));
-    set(gca, 'View', originalView);
+    
+    % Add these lines to set the view
+    azimuth = -45; % Customize these values as needed
+    elevation = 45; 
+    view(azimuth, elevation); % Apply the view angles
     hold off
 end

@@ -2,6 +2,7 @@ function moves = getAllPossibleMoves(state, maximizingPlayer)
     map = state.map;
     players = state.players;
     moves = [];
+    [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     if maximizingPlayer
         playerID = 1;  % Assuming 'red' is the AI maximizing player
     else
@@ -21,9 +22,18 @@ function moves = getAllPossibleMoves(state, maximizingPlayer)
             if newPos(1) >= 1 && newPos(1) <= mapRows && newPos(2) >= 1 && newPos(2) <= mapCols
                 % Check if the height at the new position is not zero           
                 if map.heightMap(newPos(1), newPos(2)) ~= 0
-                    [~, acception] = movePlayer(map, playerID, players, newPos, false); % false at the end is for verbose
-                    if acception == true % If move is acceted add is to possible moves
-                        moves
+                    [newPlayers, acception] = movePlayer(map, playerID, players, newPos, false); % false at the end is for verbose
+                    if acception == true % If move is accepted add is to possible moves
+                        playerMove = newPos;
+                        
+                        %get possible bock placements for the newPlayers
+                        for 
+                            [map, moveAccepted] = placeBlock(playerID, map, location, players, verbose)
+                            if moveAccepted == true
+                                return
+                            end
+                        end
+
                     end
                 end
             end
