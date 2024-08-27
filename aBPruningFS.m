@@ -32,7 +32,7 @@ function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % 
     end
 end
 
-function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer)
+function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer) %#ok<DEFNU> 
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
         bestMove = evaluateState(state);
@@ -100,7 +100,7 @@ function children = generateChildren(state, playTurn)
     
     elseif playTurn == "bluePlaceBlock"
     else
-        player = 'blueMove';  % Assuming 'black' is the opponent
+        player = 'blueMove';  % Assuming 'blue' is the opponent
     end
     
     % Get all possible legal moves for the current player
@@ -112,7 +112,7 @@ function children = generateChildren(state, playTurn)
         newState = applyMove(state, moves{i});
         
         % Add the new state to the list of children
-        children{end + 1} = newState;
+        children{end + 1} = newState; %#ok<AGROW> 
     end
 end
 

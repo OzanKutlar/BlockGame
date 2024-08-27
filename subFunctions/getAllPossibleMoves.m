@@ -1,6 +1,7 @@
 function moves = getAllPossibleMoves(state, maximizingPlayer)
     map = state.map;
     players = state.players;
+    moves = [];
     if maximizingPlayer
         playerID = 1;  % Assuming 'red' is the AI maximizing player
     else
@@ -20,8 +21,8 @@ function moves = getAllPossibleMoves(state, maximizingPlayer)
             if newPos(1) >= 1 && newPos(1) <= mapRows && newPos(2) >= 1 && newPos(2) <= mapCols
                 % Check if the height at the new position is not zero           
                 if map.heightMap(newPos(1), newPos(2)) ~= 0
-                    [~, acception] = movePlayer(map, playerID, players, newPos, true); % false at the end is for verbose
-                    if acception == true 
+                    [~, acception] = movePlayer(map, playerID, players, newPos, false); % false at the end is for verbose
+                    if acception == true % If move is acceted add is to possible moves
                         moves
                     end
                 end
