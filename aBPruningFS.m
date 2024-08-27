@@ -1,18 +1,26 @@
 
 % EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
-function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
+function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
         bestValue = evaluateState(state);
+        bestMove = [];  % No move to make since it's a terminal state or depth limit reached
+        disp("game is over or if we've reached the maximum depth")
         return;
     end
     
+    bestMove = [];  % Initialize bestMove as an empty array
+
     if maximizingPlayer
         bestValue = -Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
-            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
+            [move, eval] = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
             bestValue = max(bestValue, eval);
+            if eval >= bestValue
+                bestValue = eval;
+                bestMove = move;
+            end
             alpha = max(alpha, eval);
             if beta <= alpha
                 break; % Beta cut-off
@@ -22,8 +30,11 @@ function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % 
         bestValue = Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
-            eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, true);
-            bestValue = min(bestValue, eval);
+            [move, eval] = alphaBetaPruning(children{i}, depth - 1, alpha, beta, true);
+            if eval < bestValue
+                bestValue = eval;
+                bestMove = move;
+            end
             beta = min(beta, eval);
             if beta <= alpha
                 break; % Alpha cut-off
