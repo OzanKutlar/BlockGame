@@ -22,7 +22,7 @@ players = zeros(2, 2); % since 2 people it is 2 by 2, for 3 it is 3 by 2
 colors = ["black", "red", "blue"];
 
 % set initial locations
-players(1, :) = [1, 4]; % Red
+players(1, :) = [1, 4]; % Red % Assuming 'red' is the AI maximizing player
 players(2, :) = [4, 1]; % Blue
 state.players = players;
 
@@ -35,6 +35,8 @@ state.turn = Turns(1);
 % drawMap(map, players, colors);
 % return
 
+
+drawMap(map, players, colors);
 
 while true
     

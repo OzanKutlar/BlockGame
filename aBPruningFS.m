@@ -1,15 +1,15 @@
 
-% EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true, map, players);
+% EXAMPLE INPUT: bestMove = aBPruningFS(currentState, 3, -Inf, Inf, true);
 function bestValue = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
-    if depth == 0 || isTerminalState(map, players)
-        bestValue = evaluateState(map, players);
+    if depth == 0 || isTerminalState(state)
+        bestValue = evaluateState(state);
         return;
     end
     
     if maximizingPlayer
         bestValue = -Inf;
-        children = generateChildren(maximizingPlayer);
+        children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
             eval = alphaBetaPruning(children{i}, depth - 1, alpha, beta, false);
             bestValue = max(bestValue, eval);
@@ -72,15 +72,10 @@ function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer)
     end
 end
 
-function isTerminal = isTerminalState(map, players)
-    % Logic to check if the game is over
-    % Return true if the game is over, otherwise false
-    canMove1 = canMove(map, players, 1);
-    canMove2 = canMove(map, players, 2);
-    isTerminal = ~(canMove1 | canMove2);
-end
 
-function score = evaluateState(map, players)
+function score = evaluateState(state)
+    map = state.map;
+    players = state.players;
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
@@ -90,7 +85,7 @@ function score = evaluateState(map, players)
 
 end
 
-function children = generateChildren(playTurn)
+function children = generateChildren(state, playTurn)
     % Generate all possible children (next possible states) from the current state
     % This function should return a cell array of states
     

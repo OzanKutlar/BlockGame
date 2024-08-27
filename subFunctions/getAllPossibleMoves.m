@@ -1,4 +1,6 @@
 function moves = getAllPossibleMoves(state, maximizingPlayer)
+    map = state.map;
+    players = state.players;
     if maximizingPlayer
         playerID = 1;  % Assuming 'red' is the AI maximizing player
     else
