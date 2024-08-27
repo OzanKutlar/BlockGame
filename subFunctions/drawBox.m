@@ -29,10 +29,7 @@ function drawBox(height, location, color)
         p.Color = color;
     end
 
-    % Set axis labels
-    xlabel('X');
-    ylabel('Y');
-    zlabel('Z');
+    zlabel('Height');
 
     % Set axis limits for better visualization
     axis([x0-0.5, x0+1.5, y0-0.5, y0+1.5, 0, height+0.5]);
@@ -42,7 +39,4 @@ function drawBox(height, location, color)
 
     % Set the aspect ratio to be equal
     axis equal;
-
-    % Add title
-    title('3D Box Plot');
 end
