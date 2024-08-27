@@ -16,12 +16,12 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
             [~, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, false);
-            bestValue = max(bestValue, eval);
+            
             if eval >= bestValue
                 if(isempty(children(i)))
                     continue;
                 end
-                if(eval == bestValue && rand() > 0.5)
+                if(eval == bestValue && 1 > 0.5)
                     continue;
                 end
                 bestValue = eval;

@@ -22,8 +22,8 @@ function moves = getAllPossibleMoves(state, playerID)
                         playerMove = newPos;
                         
                         %get possible bock placements for the newPlayers
-                        for k = [-1, 0, 1]
-                            for l = [-1, 0, 1]
+                        for k = [-2, -1, 0, 1, 2]
+                            for l = [-2, -1, 0, 1, 2]
                                 if(k == 0 && l == 0)
                                     continue
                                 end
