@@ -1,6 +1,8 @@
 % This function checks if a player can make a move
 
-function canMove = canMove(map, players, playerID) % map = heightmap, players = matrix of locations, playerID = 
+function canMove = canMove(state, playerID) % map = heightmap, players = matrix of locations, playerID = 
+    map = state.map;
+    players = state.players;
     canMove = false;
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     currentPos = players(playerID, :);  % Current position of the player
