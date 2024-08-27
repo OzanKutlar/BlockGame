@@ -29,9 +29,9 @@ state.players = players;
 % canMove(map, players, 1); % code check for canMove
 winner = 0;
 currentPlayer = 1;
-state.turn = "redMove";
 % The turns are the following:
 Turns = ["redMove", "redPlaceBlock", "blueMove", "bluePlaceBlock"];
+state.turn = Turns(1);
 % drawMap(map, players, colors);
 % return
 
@@ -41,6 +41,10 @@ while true
     %%% Ozan bunu fonksiyon yapabilir misin getPlayeMove(currentState) gibi
     % böylece if AI == 1 || 2 başka loopa girmesini sağlarız
     %yukarıda number of AI players'ı göstermek istedim.
+
+    state.map = map;
+    state.players = players;
+    
     drawMap(map, players, colors);
     title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
     % canMove(state, currentPlayer);
