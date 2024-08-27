@@ -94,7 +94,7 @@ function score = evaluateState(state)
     moveCount2 = moveCount(state, 2);
     score = moveCount1 - moveCount2;
     if moveCount1 == 0
-        score = -10;
+        score = -Inf;
     elseif moveCount2 == 0
         score = 20;
     end
@@ -117,11 +117,11 @@ function children = generateChildren(state, playTurn)
     % Get all possible legal moves for the current player
     moves = getAllPossibleMoves(state, player);
 
-    children(length(moves) + 1) = state;
-    children(length(moves) + 1) = [];
+    children(height(moves) + 1) = state;
+    children(height(moves) + 1) = [];
     
     % Loop through each possible move
-    for i = 1:length(moves)
+    for i = 1:height(moves)
         % Apply the move to the current state to generate a new state
         newState = applyMove(state, moves(i, :));
         

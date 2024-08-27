@@ -1,5 +1,6 @@
+disp("Setting player to be starter");
+currentPlayer = 2;
 while true
-    
     %%% Ozan bunu fonksiyon yapabilir misin getPlayeMove(currentState) gibi
     % böylece if AI == 1 || 2 başka loopa girmesini sağlarız
     %yukarıda number of AI players'ı göstermek istedim.
@@ -8,8 +9,21 @@ while true
     state.players = players;
     
     drawMap(map, players, colors, currentPlayer);
-    title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
-    % canMove(state, currentPlayer);
+    
+    if(~canMove(state, currentPlayer))
+        disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has died!"));
+        players(currentPlayer, :) = [];
+        colors(currentPlayer + 1) = [];
+        if(currentPlayer == height(players) + 1)
+            currentPlayer = 1;
+        end
+    end
+    
+    if(height(players) == 1)
+        disp("Game Over!");
+        disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has won!"));
+        return;
+    end
     
     if currentPlayer == 1 % check if it is AI move
         [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
@@ -34,7 +48,6 @@ while true
         end
     
         drawMap(map, players, colors, currentPlayer);
-        title(strcat("It is player ", colors(currentPlayer + 1), "'s turn."))
     
         while true
             targetLoc = getBlockPlacement(state, false);
