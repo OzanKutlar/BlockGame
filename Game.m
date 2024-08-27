@@ -45,6 +45,6 @@ if(x == "Y")
     aiGame;
 end
 if(x == "N")
-    humanGame;
+    aiOnlyGame;
 end
 

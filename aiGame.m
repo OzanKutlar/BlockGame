@@ -26,8 +26,8 @@ while true
     end
     
     if currentPlayer == 1 % check if it is AI move
-        [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
-        playerTargetLoc = bestMove.players(1, :);
+        [bestMove, bestValue] = aBPruningFS(state, 3, -Inf, Inf, true, currentPlayer);
+        playerTargetLoc = bestMove.players(currentPlayer, :);
 
         [row, col] = find(map.heightMap - bestMove.map.heightMap);
         blockTargetLoc = [row, col];

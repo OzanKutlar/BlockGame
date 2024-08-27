@@ -1,13 +1,8 @@
-function moves = getAllPossibleMoves(state, maximizingPlayer)
+function moves = getAllPossibleMoves(state, playerID)
     map = state.map;
     players = state.players;
     moves = [];
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
-    if maximizingPlayer
-        playerID = 1;  % Assuming 'red' is the AI maximizing player
-    else
-        playerID = 2;  % Assuming 'blue' is the opponent
-    end
 
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     currentPos = players(playerID, :);  % Current position of the player

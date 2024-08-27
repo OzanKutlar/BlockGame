@@ -10,8 +10,8 @@ function newstate = applyMove(state, move)
     playerID = currentPlayer;
     placeBlockLocation = move(3:4);
 
-    [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc);
-    [map, ~] = placeBlock(playerID, map, placeBlockLocation, players);
+    [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc, false);
+    [map, ~] = placeBlock(playerID, map, placeBlockLocation, players, false);
     newstate.map = map;
     newstate.players = players;
 
