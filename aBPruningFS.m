@@ -5,7 +5,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
     if depth == 0 || isTerminalState(state)
         bestValue = evaluateState(state);
         bestMove = [];  % No move to make since it's a terminal state or depth limit reached
-        disp("game is over or if we've reached the maximum depth")
+        % disp("game is over or if we've reached the maximum depth")
         return;
     end
     
@@ -19,7 +19,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
             bestValue = max(bestValue, eval);
             if eval >= bestValue
                 bestValue = eval;
-                bestMove = move;
+                bestMove = children(i);
             end
             alpha = max(alpha, eval);
             if beta <= alpha
@@ -33,7 +33,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
             [move, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, true);
             if eval < bestValue
                 bestValue = eval;
-                bestMove = move;
+                bestMove = children(i);
             end
             beta = min(beta, eval);
             if beta <= alpha
