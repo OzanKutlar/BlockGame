@@ -19,7 +19,7 @@ players(2, :) = [7, 4]; % int locations set
 % canMove(map, players, 1); % code check for canMove
 winner = 0;
 currentPlayer = 1;
-while false
+while true
     disp("Please move your character : ")
     while true
         targetLoc = getInput();
