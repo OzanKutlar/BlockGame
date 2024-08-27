@@ -21,6 +21,12 @@ function [players, moveAccepted] = movePlayer(map, playerID, players, location, 
         return;
     end
     clear movementVector
+    if(map.heightMap(location(1), location(2)) == 0)
+        if(verbose)
+            disp("You cannot move into the void");
+        end
+        return;
+    end
     heightDifference = map.heightMap(location(1), location(2)) - map.heightMap(player(1), player(2));
     if(abs(heightDifference) > 1)
         if(verbose)
