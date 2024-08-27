@@ -17,7 +17,7 @@ function moveCount = moveCount(state, playerID) % map = heightmap, players = mat
                 if map.heightMap(newPos(1), newPos(2)) ~= 0
                     [~, acception] = movePlayer(map, playerID, players, newPos, false); % false at the end is for verbose
                     if acception == true 
-                        moveCount = moveCount + 1 * (map.heightMap(newPos(1), newPos(2)));
+                        moveCount = moveCount + 1 * min(map.heightMap(newPos(1), newPos(2)), 4);
                         % moveCount = moveCount + 1;
                     end
                 end

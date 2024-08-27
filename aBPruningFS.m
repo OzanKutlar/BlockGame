@@ -21,11 +21,10 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
                 if(isempty(children(i)))
                     continue;
                 end
-                if(eval == bestValue && rand() > 0.5)
-                    continue;
+                if(eval ~= bestValue || rand() < 0.5)
+                    bestValue = eval;
+                    bestMove = children(i);
                 end
-                bestValue = eval;
-                bestMove = children(i);
             end
             alpha = max(alpha, eval);
             if beta <= alpha

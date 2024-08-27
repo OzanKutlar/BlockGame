@@ -10,7 +10,8 @@ function drawBox(height, location, color)
     % Define the coordinates of the box
     x = [x0, x0 + 1, x0 + 1, x0, x0, x0 + 1, x0 + 1, x0]; % X-coordinates of the 8 corners
     y = [y0, y0, y0 + 1, y0 + 1, y0, y0, y0 + 1, y0 + 1]; % Y-coordinates of the 8 corners
-    z = [height - 1, height - 1, height - 1, height - 1, height, height, height, height]; % Z-coordinates of the 8 corners
+    % z = [height - 1, height - 1, height - 1, height - 1, height, height, height, height]; % Z-coordinates of the 8 corners
+    z = [1, 1, 1, 1, height, height, height, height]; % Z-coordinates of the 8 corners
 
     % Create a figure and scatter the points
     % scatter3(x, y, z, 'filled');
