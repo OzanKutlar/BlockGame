@@ -32,6 +32,9 @@ currentPlayer = 1;
 state.turn = "redMove";
 % The turns are the following:
 Turns = ["redMove", "redPlaceBlock", "blueMove", "bluePlaceBlock"];
+drawMap(map, players, colors);
+return
+
 
 while true
 
@@ -60,7 +63,7 @@ while true
     end
     currentPlayer = currentPlayer + 1;
 end
-drawMap(map, players, colors);
+
 
 
 
