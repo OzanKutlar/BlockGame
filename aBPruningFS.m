@@ -21,7 +21,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
                 if(isempty(children(i)))
                     continue;
                 end
-                if(eval ~= bestValue || rand() < 0.5)
+                if(eval ~= bestValue || 0 < 0.5)
                     bestValue = eval;
                     bestMove = children(i);
                 end
@@ -96,14 +96,14 @@ function score = evaluateState(state)
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
-    moveCountOwn = moveCount(state, playerID) * (height(players) - 1);
+    moveCountOwn = moveScoreSS(state, playerID) * (height(players) - 1);
     moveCountOthers = 0;
     killed = 0;
     for i = 1:height(players)
         if(i == playerID)
             continue;
         end
-        otherMoveCount = moveCount(state, i);
+        otherMoveCount = moveScoreSS(state, i);
         if(otherMoveCount == 0)
             killed = killed + 1;
         end
@@ -114,7 +114,7 @@ function score = evaluateState(state)
         score = killed * 10;
     end
     if moveCountOwn == 0
-        score = -10;
+        score = -1000;
     end
 end
 
