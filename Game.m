@@ -2,7 +2,7 @@ clc;
 clear;
 clf;
 map = struct('heightMap', [], 'colorMap', []);
-state = struct("map", [], "players", [], "turn", [], "blocksLeft", []);
+state = struct("map", [], "players", [], "currentPlayer", [], "blocksLeft", []);
 load map
 addpath('.\subFunctions');
 
@@ -29,9 +29,7 @@ state.players = players;
 % canMove(map, players, 1); % code check for canMove
 winner = 0;
 currentPlayer = 1;
-% The turns are the following:
-Turns = ["redMove", "redPlaceBlock", "blueMove", "bluePlaceBlock"];
-state.turn = Turns(1);
+state.currentPlayer = 1; 
 
 % drawMap(map, players, colors);
 % return

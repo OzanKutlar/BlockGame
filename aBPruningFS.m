@@ -94,13 +94,10 @@ function children = generateChildren(state, playTurn)
     % Determine which player's turn it is
     % made it so that there are actually four moves each round for the
     % algorithm to able to change the order if need be in the future
-    if playTurn == "redMove"
+    if playTurn == true
         player = 1;  % Assuming 'red' is the AI maximizing player
-    elseif playTurn == "redPlaceBlock"
-    
-    elseif playTurn == "bluePlaceBlock"
     else
-        player = 'blueMove';  % Assuming 'blue' is the opponent
+        player = 2;  % Assuming 'blue' is the opponent
     end
     
     % Get all possible legal moves for the current player
@@ -116,7 +113,3 @@ function children = generateChildren(state, playTurn)
     end
 end
 
-
-% Example usage:
-currentState = initializeGame();  % Function to initialize the game state
-bestMove = alphaBetaPruning(currentState, 3, -Inf, Inf, true);  % Find the best move
