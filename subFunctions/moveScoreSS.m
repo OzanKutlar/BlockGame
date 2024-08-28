@@ -8,8 +8,10 @@ function moveScore = moveScoreSS(state, playerID)
     moveScore = 0;
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     currentPos = players(playerID, :);  % Current position of the player
+    currentPosHeight = map.heightMap(currentPos(1), currentPos(2));
     otherPlayerPos = players(3 - playerID, :);
     otherPlayerHeight = map.heightMap(otherPlayerPos(1), otherPlayerPos(2));
+
     for i = [-1, 0, 1]
         for j = [-1, 0, 1]
             if(i == 0 && j == 0)
@@ -31,11 +33,11 @@ function moveScore = moveScoreSS(state, playerID)
                         % things: height difference gain or loss where being 
                         % higher is always better: ot height but height
                         % diff important!
-                        heightDiff = newPosHeight - otherPlayerHeight;
+                        heightDiff = newPosHeight - 1*otherPlayerHeight;
                         heightScore = -((heightDiff - 2).^2)./2 + heightDiff./2 + 3;
 
                         
-                        moveScore = moveScore + 1 + heightScore;
+                        moveScore = moveScore + 2 + 0.2 * heightScore + 1.5*currentPosHeight;
                         % moveCount = moveCount + 1;
                     end
                 end

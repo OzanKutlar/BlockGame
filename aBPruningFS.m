@@ -96,24 +96,24 @@ function score = evaluateState(state)
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
-    moveCountOwn = moveScoreSS(state, playerID) * (height(players) - 1);
-    moveCountOthers = 0;
+    moveScoreOwn = moveScoreSS(state, playerID) * (height(players) - 1);
+    moveScoreOthers = 0;
     killed = 0;
     for i = 1:height(players)
         if(i == playerID)
             continue;
         end
-        otherMoveCount = moveScoreSS(state, i);
-        if(otherMoveCount == 0)
+        otherPlayerScore = moveScoreSS(state, i);
+        if(otherPlayerScore == 0)
             killed = killed + 1;
         end
-        moveCountOthers = moveCountOthers + otherMoveCount;
+        moveScoreOthers = moveScoreOthers + otherPlayerScore;
     end
-    score = moveCountOwn - moveCountOthers;
+    score = moveScoreOwn - moveScoreOthers;
     if(killed ~= 0)
-        score = killed * 10;
+        score = killed + 1000; % very high since 1 kill enough for the game to end
     end
-    if moveCountOwn == 0
+    if moveScoreOwn == 0
         score = -1000;
     end
 end
