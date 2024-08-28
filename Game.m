@@ -12,7 +12,7 @@ map.colorMap = zeros(size(heightMap)); % before feeding to AI use +1 for layer
 % State structure holds the information of the game
 % Such as player pos. color and height maps, blocks left, turn.
 % The State is fundamental for editing during foresight for AI
-AIDepth = 5;
+AIDepth = 3;
 AIPlayerID = 1;
 AIGoesFirst = true;
 
@@ -42,7 +42,7 @@ state.currentPlayer = 1;
 
 drawMap(map, players, colors, currentPlayer);
 
-x = input("Play against AI? Y/N [Y] : ", 's');
+x = input("Play against AI? A/Y/N, (AIxAI, AIxPlayer, PlayerxPlayer [Y] : ", 's');
 if(isempty(x))
     x = "Y";
 end
@@ -50,6 +50,9 @@ if(x == "Y")
     aiGame;
 end
 if(x == "N")
+    humanGame;
+end
+if(x == "A")
     aiOnlyGame;
 end
 
