@@ -1,5 +1,9 @@
 disp("Setting player to be starter");
-currentPlayer = 2;
+if(AIGoesFirst)
+    currentPlayer = AIPlayerID;
+else
+    currentPlayer = mod(AIPlayerID + 1, height(players)) + 1; % Select the player after the AI to start
+end
 while true
     %%% Ozan bunu fonksiyon yapabilir misin getPlayeMove(currentState) gibi
     % böylece if AI == 1 || 2 başka loopa girmesini sağlarız
@@ -25,7 +29,7 @@ while true
         return;
     end
     
-    if currentPlayer == 1 % check if it is AI move
+    if currentPlayer == AIPlayerID % check if it is AI move
         [bestMove, bestValue] = aBPruningFS(state, AIDepth, -Inf, Inf, currentPlayer);
         playerTargetLoc = bestMove.players(currentPlayer, :);
 
