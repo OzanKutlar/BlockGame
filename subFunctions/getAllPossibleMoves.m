@@ -1,4 +1,4 @@
-function moves = getAllPossibleMoves(state, playerID)
+function result = getAllPossibleMoves(state, playerID)
     map = state.map;
     players = state.players;
     playerMoves = [];
@@ -47,13 +47,12 @@ function moves = getAllPossibleMoves(state, playerID)
     result = zeros(height(blockMoves) * height(playerMoves), 4); % Initialize an empty cell array for the result
     index = 1;   % Initialize an index for the result
     
-    for i = 1:length(height(blockMoves))
-        for j = 1:length(height(playerMoves))
+    for i = 1:height(blockMoves)
+        for j = 1:height(playerMoves)
             result(index, :) = horzcat(playerMoves(j, :), blockMoves(i, :)); % Combine elements from list1 and list2
             index = index + 1; % Increment the index
         end
     end
     
-    disp("moves")
 
 end
