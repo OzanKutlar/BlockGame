@@ -7,6 +7,8 @@ function result = getAllPossibleMoves(state, playerID)
 
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     currentPos = players(playerID, :);  % Current position of the player
+
+    %get possible moves for the player
     for i = [-1, 0, 1]
         for j = [-1, 0, 1]
             if(i == 0 && j == 0)
@@ -26,13 +28,10 @@ function result = getAllPossibleMoves(state, playerID)
             end
         end
     end
-    %get possible bock placements for the newPlayers
+    %get all possible/impossible bock placements for the Player
+
     for k = [-2, -1, 0, 1, 2]
-        for l = [-2, -1, 0, 1, 2]
-            if(k == 0 && l == 0)
-                continue
-            end
-            
+        for l = [-2, -1, 0, 1, 2]            
             blockLocation = currentPos + [k, l];
             % Check if blockLocation is within bounds
             if blockLocation(1) >= 1 && blockLocation(1) <= mapRows && blockLocation(2) >= 1 && blockLocation(2) <= mapCols
@@ -44,11 +43,14 @@ function result = getAllPossibleMoves(state, playerID)
         end
     end
     
-    result = zeros(height(blockMoves) * height(playerMoves), 4); % Initialize an empty cell array for the result
+    result = ones(height(blockMoves) * height(playerMoves), 4); % Initialize an empty cell array for the result
     index = 1;   % Initialize an index for the result
     
     for i = 1:height(blockMoves)
         for j = 1:height(playerMoves)
+            if playerMoves(j, :) == blockMoves(i, :)
+                continue
+            end
             result(index, :) = horzcat(playerMoves(j, :), blockMoves(i, :)); % Combine elements from list1 and list2
             index = index + 1; % Increment the index
         end
