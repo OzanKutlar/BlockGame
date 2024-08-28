@@ -103,7 +103,7 @@ function score = evaluateState(state)
         if(i == playerID)
             continue;
         end
-        otherPlayerScore = moveScoreV1(state, i);
+        otherPlayerScore = otherPlayerMoveScoreV1(state, i);
         if(otherPlayerScore == 0)
             killed = killed + 1;
         end
