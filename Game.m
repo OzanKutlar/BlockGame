@@ -12,7 +12,11 @@ map.colorMap = zeros(size(heightMap)); % before feeding to AI use +1 for layer
 % State structure holds the information of the game
 % Such as player pos. color and height maps, blocks left, turn.
 % The State is fundamental for editing during foresight for AI
-AIDepth = 4;
+AIDepth = 5;
+AIPlayerID = 1;
+AIGoesFirst = true;
+
+
 state.map = map;
 state.blocksLeft = zeros(2,2); %for each player we have their own blocks and black blocks
 state.blocksLeft(1, :) = [15, 5]; % 1. column is the colored blocks 2. column is the black blocks

@@ -1,6 +1,7 @@
 % disp("Setting player to be starter");
 currentPlayer = 1;
 while true
+    tic
     %%% Ozan bunu fonksiyon yapabilir misin getPlayeMove(currentState) gibi
     % böylece if AI == 1 || 2 başka loopa girmesini sağlarız
     %yukarıda number of AI players'ı göstermek istedim.
@@ -19,7 +20,6 @@ while true
             currentPlayer = 1;
         end
     end
-    
     if(height(players) == 1)
         disp("Game Over!");
         disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has won!"));
@@ -39,6 +39,7 @@ while true
         currentPlayer = 0;
     end
     currentPlayer = currentPlayer + 1;
+    toc
 end
 
 
