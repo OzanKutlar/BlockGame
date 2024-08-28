@@ -42,7 +42,7 @@ state.currentPlayer = 1;
 
 drawMap(map, players, colors, currentPlayer);
 
-x = input("Play against AI? Y/N [Y] : ", 's');
+x = input("Play against AI? A/Y/N, (AIxAI, AIxPlayer, PlayerxPlayer [Y] : ", 's');
 if(isempty(x))
     x = "Y";
 end
@@ -50,6 +50,9 @@ if(x == "Y")
     aiGame;
 end
 if(x == "N")
+    humanGame;
+end
+if(x == "A")
     aiOnlyGame;
 end
 
