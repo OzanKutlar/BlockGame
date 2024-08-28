@@ -2,7 +2,7 @@ clc;
 clear;
 clf;
 map = struct('heightMap', [], 'colorMap', []);
-state = struct("map", [], "players", [], "currentPlayer", [], "blocksLeft", []);
+state = struct("map", [], "players", [], "currentPlayer", [], "blocksLeft", [], "score", []);
 load map
 addpath('.\subFunctions');
 
@@ -12,7 +12,7 @@ map.colorMap = zeros(size(heightMap)); % before feeding to AI use +1 for layer
 % State structure holds the information of the game
 % Such as player pos. color and height maps, blocks left, turn.
 % The State is fundamental for editing during foresight for AI
-AIDepth = 4;
+AIDepth = 2;
 AIPlayerID = 1;
 AIGoesFirst = true;
 

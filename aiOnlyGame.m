@@ -25,10 +25,10 @@ while true
         disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has won!"));
         return;
     end
-    [bestMove, bestValue] = aBPruningFS(state, AIDepth, -Inf, Inf, true);
-    playerTargetLoc = bestMove.players(currentPlayer, :);
+    [bestState, bestValue] = aBPruningFS(state, AIDepth, -Inf, Inf, true);
+    playerTargetLoc = bestState.players(currentPlayer, :);
 
-    [row, col] = find(map.heightMap - bestMove.map.heightMap);
+    [row, col] = find(map.heightMap - bestState.map.heightMap);
     blockTargetLoc = [row, col];
     [players, ~] = movePlayer(map, currentPlayer, players, playerTargetLoc, true);
     [map, ~] = placeBlock(currentPlayer, map, blockTargetLoc, players, true);

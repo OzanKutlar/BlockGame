@@ -21,8 +21,8 @@ function drawMap(map, players, colors, currentPlayer) % not used for AI
     xticklabels((1:height(map.heightMap)));
     
     % Add these lines to set the view
-    azimuth = -45; % Customize these values as needed
-    elevation = 45; 
+    azimuth = -35; % Customize these values as needed
+    elevation = 80; 
     view(azimuth, elevation); % Apply the view angles
     title(strcat("It is player ", upper(colors(currentPlayer + 1)), "'s turn."))
     hold off

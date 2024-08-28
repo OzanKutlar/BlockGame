@@ -1,14 +1,14 @@
-function moveScore = moveScoreSS(state, playerID) 
+function moveScore = moveScoreV1(state, playerID) 
 
         %%% Hard coded for two  as it takes diff in heights
 
     map = state.map;
     players = state.players;
     % playerID = state.currentPlayer;
-    moveScore = 0;
     [mapRows, mapCols] = size(map.heightMap);  % Get the size of the map
     currentPos = players(playerID, :);  % Current position of the player
     currentPosHeight = map.heightMap(currentPos(1), currentPos(2));
+    moveScore = currentPosHeight;
     otherPlayerPos = players(3 - playerID, :);
     otherPlayerHeight = map.heightMap(otherPlayerPos(1), otherPlayerPos(2));
 
@@ -37,7 +37,7 @@ function moveScore = moveScoreSS(state, playerID)
                         heightScore = -((heightDiff - 2).^2)./2 + heightDiff./2 + 3;
 
                         
-                        moveScore = moveScore + 2 + 0.2 * heightScore + 1.5*currentPosHeight;
+                        moveScore = moveScore + 2 + 0.2 * heightScore;
                         % moveCount = moveCount + 1;
                     end
                 end

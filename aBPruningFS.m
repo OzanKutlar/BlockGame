@@ -1,29 +1,29 @@
 
 % EXAMPLE INPUT: [bestMove, bestValue] = aBPruningFS(state, 1, -Inf, Inf, true);
-function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
+function [bestState, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizingPlayer) % Fail Soft alpha beta pruning algorithm
     % Check if the game is over or if we've reached the maximum depth
     if depth == 0 || isTerminalState(state)
         bestValue = evaluateState(state);
-        bestMove = state;  % No move to make since it's a terminal state or depth limit reached
+        bestState = state;  % No move to make since it's a terminal state or depth limit reached
         % disp("game is over or if we've reached the maximum depth")
         return;
     end
     
-    bestMove = [];  % Initialize bestMove as an empty array
+    bestState = [];  % Initialize bestMove as an empty array
 
     if maximizingPlayer
         bestValue = -Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
             [~, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, false);
-            
+            children(i).score = eval;
             if eval >= bestValue
                 if(isempty(children(i)))
                     continue;
                 end
-                if(eval ~= bestValue || 0 < 0.5)
+                if(eval ~= bestValue || 1 < 0.5)
                     bestValue = eval;
-                    bestMove = children(i);
+                    bestState = children(i);
                 end
             end
             alpha = max(alpha, eval);
@@ -38,7 +38,7 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
             [~, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, true);
             if eval < bestValue
                 bestValue = eval;
-                bestMove = children(i);
+                bestState = children(i);
             end
             beta = min(beta, eval);
             if beta <= alpha
@@ -48,45 +48,45 @@ function [bestMove, bestValue] = aBPruningFS(state, depth, alpha, beta, maximizi
     end
 end
 
-function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer) %#ok<DEFNU> 
-    % Check if the game is over or if we've reached the maximum depth
-    if depth == 0 || isTerminalState(state)
-        bestMove = evaluateState(state);
-        return;
-    end
-
-    if maximizingPlayer
-        maxEval = -Inf;
-        children = generateChildren(state, maximizingPlayer);
-        bestMove = [];
-        for i = 1:length(children)
-            eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, false);
-            if eval > maxEval
-                maxEval = eval;
-                bestMove = children(i);
-            end
-            alpha = max(alpha, eval);
-            if beta <= alpha
-                break; % Beta cut-off
-            end
-        end
-    else
-        minEval = Inf;
-        children = generateChildren(state, maximizingPlayer);
-        bestMove = [];
-        for i = 1:length(children)
-            eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, true);
-            if eval < minEval
-                minEval = eval;
-                bestMove = children(i);
-            end
-            beta = min(beta, eval);
-            if beta <= alpha
-                break; % Alpha cut-off
-            end
-        end
-    end
-end
+% function bestMove = alphaBetaPruningFH(depth, alpha, beta, maximizingPlayer) %#ok<DEFNU> 
+%     % Check if the game is over or if we've reached the maximum depth
+%     if depth == 0 || isTerminalState(state)
+%         bestMove = evaluateState(state);
+%         return;
+%     end
+% 
+%     if maximizingPlayer
+%         maxEval = -Inf;
+%         children = generateChildren(state, maximizingPlayer);
+%         bestMove = [];
+%         for i = 1:length(children)
+%             eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, false);
+%             if eval > maxEval
+%                 maxEval = eval;
+%                 bestMove = children(i);
+%             end
+%             alpha = max(alpha, eval);
+%             if beta <= alpha
+%                 break; % Beta cut-off
+%             end
+%         end
+%     else
+%         minEval = Inf;
+%         children = generateChildren(state, maximizingPlayer);
+%         bestMove = [];
+%         for i = 1:length(children)
+%             eval = alphaBetaPruning(children(i), depth - 1, alpha, beta, true);
+%             if eval < minEval
+%                 minEval = eval;
+%                 bestMove = children(i);
+%             end
+%             beta = min(beta, eval);
+%             if beta <= alpha
+%                 break; % Alpha cut-off
+%             end
+%         end
+%     end
+% end
 
 
 function score = evaluateState(state)
@@ -97,6 +97,7 @@ function score = evaluateState(state)
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
     moveScoreOwn = moveScoreV1(state, playerID) * (height(players) - 1);
+    moveCountOwn = moveCount(state, playerID);
     moveScoreOthers = 0;
     killed = 0;
     for i = 1:height(players)
@@ -104,17 +105,18 @@ function score = evaluateState(state)
             continue;
         end
         otherPlayerScore = otherPlayerMoveScoreV1(state, i);
-        if(otherPlayerScore == 0)
+        otherPlayerMoveCount = moveCount(state, i);
+        if(otherPlayerMoveCount == 0)
             killed = killed + 1;
         end
         moveScoreOthers = moveScoreOthers + otherPlayerScore;
     end
     score = moveScoreOwn - moveScoreOthers;
     if(killed ~= 0)
-        score = killed + 1000; % very high since 1 kill enough for the game to end
+        score = killed + Inf; % very high since 1 kill enough for the game to end
     end
-    if moveScoreOwn == 0
-        score = -1000;
+    if moveCountOwn == 0
+        score = -Inf;
     end
 end
 
@@ -139,8 +141,7 @@ function children = generateChildren(state, playTurn)
     moves = getAllPossibleMoves(state, player);
 
     children(height(moves) + 1) = state;
-    children(height(moves) + 1) = [];
-    
+
     % Loop through each possible move
     for i = 1:height(moves)
         % Apply the move to the current state to generate a new state
