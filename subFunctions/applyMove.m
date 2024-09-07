@@ -4,6 +4,7 @@ function newstate = applyMove(state, move)
     map = state.map;
     players = state.players;
     newstate = state;
+    
 
     currentPlayer = state.currentPlayer;
     playerTargetLoc = move(1:2);
@@ -14,6 +15,10 @@ function newstate = applyMove(state, move)
     [map, ~] = placeBlock(playerID, map, placeBlockLocation, players, false);
     newstate.map = map;
     newstate.players = players;
-
-
+    
+    if(currentPlayer == height(players))
+        currentPlayer = 0;
+    end
+    currentPlayer = currentPlayer + 1;
+    newstate.currentPlayer = currentPlayer;
 end

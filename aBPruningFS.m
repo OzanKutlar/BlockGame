@@ -15,12 +15,14 @@ function [bestState, bestValue] = aBPruningFS(state, depth, alpha, beta, maximiz
         bestValue = -Inf;
         children = generateChildren(state, maximizingPlayer);
         for i = 1:length(children)
+            if(isempty(children(i)))
+                continue;
+            end
+
             [~, eval] = aBPruningFS(children(i), depth - 1, alpha, beta, false);
             children(i).score = eval;
             if eval >= bestValue
-                if(isempty(children(i)))
-                    continue;
-                end
+
                 if(eval ~= bestValue || 1 < 0.5)
                     bestValue = eval;
                     bestState = children(i);
@@ -128,13 +130,9 @@ function children = generateChildren(state, playTurn)
     % made it so that there are actually four moves each round for the
     % algorithm to able to change the order if need be in the future
     if playTurn == true
-        player = playerID;  % Assuming 'red' is the AI maximizing player
+        player = 1;  % Assuming 'red' is the AI maximizing player
     else
-        if(playerID == 2)
-            player = 1;
-        else
-            player = 2;
-        end
+        player = 2;
     end
     
     % Get all possible legal moves for the current player
