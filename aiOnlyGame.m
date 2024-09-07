@@ -9,6 +9,7 @@ while true
     state.map = map;
     state.players = players;
     state.currentPlayer = currentPlayer;
+    state.playerTurn = currentPlayer;
     
     drawMap(map, players, colors, currentPlayer);
     

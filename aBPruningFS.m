@@ -94,7 +94,7 @@ end
 function score = evaluateState(state)
     map = state.map;
     players = state.players;
-    playerID = state.currentPlayer;
+    playerID = state.playerTurn;
     % Implement a heuristic evaluation function for the current state
     % This function should return a numerical value representing the desirability of the state
     % score = 0;
