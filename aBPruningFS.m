@@ -14,8 +14,12 @@ function [bestState, bestValue] = aBPruningFS(state, depth, alpha, beta, maximiz
     if maximizingPlayer
         bestValue = -Inf;
         children = generateChildren(state, maximizingPlayer);
+        removedChildren = 0;
         for i = 1:length(children)
+            i = i - removedChildren;
             if(isempty(children(i)))
+                children(i) = [];
+                removedChildren = removedChildren + 1;
                 continue;
             end
 

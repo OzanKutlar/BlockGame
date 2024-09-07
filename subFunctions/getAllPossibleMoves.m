@@ -32,6 +32,9 @@ function result = getAllPossibleMoves(state, playerID)
 
     for k = [-2, -1, 0, 1, 2]
         for l = [-2, -1, 0, 1, 2]            
+            if(k == 0 && l == 0)
+                continue
+            end
             blockLocation = currentPos + [k, l];
             % Check if blockLocation is within bounds
             if blockLocation(1) >= 1 && blockLocation(1) <= mapRows && blockLocation(2) >= 1 && blockLocation(2) <= mapCols

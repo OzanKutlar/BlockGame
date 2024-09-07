@@ -26,6 +26,8 @@ while true
         disp(strcat("Player ", upper(colors(currentPlayer + 1)), " has won!"));
         return;
     end
+
+    
     [bestState, bestValue] = aBPruningFS(state, AIDepth, -Inf, Inf, true);
     playerTargetLoc = bestState.players(currentPlayer, :);
 
